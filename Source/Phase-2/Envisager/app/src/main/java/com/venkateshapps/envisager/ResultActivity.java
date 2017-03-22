@@ -77,11 +77,12 @@ public class ResultActivity extends AppCompatActivity {
 
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("POST");
-                OutputStream os = urlConnection.getOutputStream();
-                OutputStreamWriter osw = new OutputStreamWriter(os);
-                osw.write(img.toString());
-                osw.flush();
-                osw.close();
+                urlConnection.setDoOutput(true);
+                DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+                String str = new String(img);
+                wr.writeBytes(str);
+                wr.flush();
+                wr.close();
 
                 in = new BufferedInputStream(urlConnection.getInputStream());
 
